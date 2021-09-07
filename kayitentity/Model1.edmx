@@ -1,0 +1,280 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="KayıtSistemiModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Ders_Adlari">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DersAdi" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Ders_Secim">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DersKodu" Type="nvarchar" MaxLength="50" />
+          <Property Name="Kredi" Type="nvarchar" MaxLength="50" />
+          <Property Name="Saat" Type="nvarchar" MaxLength="50" />
+          <Property Name="idDers" Type="int" />
+        </EntityType>
+        <EntityType Name="Hocalar1">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Hoca" Type="nvarchar" MaxLength="50" />
+          <Property Name="idHoca" Type="int" />
+        </EntityType>
+        <EntityType Name="Secilen_Dersler">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ders" Type="nvarchar" MaxLength="50" />
+          <Property Name="Kod" Type="nvarchar" MaxLength="50" />
+          <Property Name="Kredi" Type="nvarchar" MaxLength="50" />
+          <Property Name="Saat" Type="nvarchar" MaxLength="50" />
+          <Property Name="Hoca" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'KayıtSistemi.dbo.son' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="son">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="DersKodu" Type="nvarchar" MaxLength="50" />
+          <Property Name="Kredi" Type="nvarchar" MaxLength="50" />
+          <Property Name="Saat" Type="nvarchar" MaxLength="50" />
+          <Property Name="DersAdi" Type="nvarchar" MaxLength="50" />
+          <Property Name="Hoca" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Ders_Secim_Ders_Adlari">
+          <End Role="Ders_Adlari" Type="Self.Ders_Adlari" Multiplicity="0..1" />
+          <End Role="Ders_Secim" Type="Self.Ders_Secim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ders_Adlari">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Ders_Secim">
+              <PropertyRef Name="idDers" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hocalar1_Ders_Adlari">
+          <End Role="Ders_Adlari" Type="Self.Ders_Adlari" Multiplicity="0..1" />
+          <End Role="Hocalar1" Type="Self.Hocalar1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ders_Adlari">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Hocalar1">
+              <PropertyRef Name="idHoca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="KayıtSistemiModelStoreContainer">
+          <EntitySet Name="Ders_Adlari" EntityType="Self.Ders_Adlari" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ders_Secim" EntityType="Self.Ders_Secim" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Hocalar1" EntityType="Self.Hocalar1" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Secilen_Dersler" EntityType="Self.Secilen_Dersler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="son" EntityType="Self.son" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [son].[id] AS [id], 
+    [son].[DersKodu] AS [DersKodu], 
+    [son].[Kredi] AS [Kredi], 
+    [son].[Saat] AS [Saat], 
+    [son].[DersAdi] AS [DersAdi], 
+    [son].[Hoca] AS [Hoca]
+    FROM [dbo].[son] AS [son]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_Ders_Secim_Ders_Adlari" Association="Self.FK_Ders_Secim_Ders_Adlari">
+            <End Role="Ders_Adlari" EntitySet="Ders_Adlari" />
+            <End Role="Ders_Secim" EntitySet="Ders_Secim" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hocalar1_Ders_Adlari" Association="Self.FK_Hocalar1_Ders_Adlari">
+            <End Role="Ders_Adlari" EntitySet="Ders_Adlari" />
+            <End Role="Hocalar1" EntitySet="Hocalar1" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="KayıtSistemiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Ders_Adlari">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DersAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Ders_Secim" Relationship="Self.FK_Ders_Secim_Ders_Adlari" FromRole="Ders_Adlari" ToRole="Ders_Secim" />
+          <NavigationProperty Name="Hocalar1" Relationship="Self.FK_Hocalar1_Ders_Adlari" FromRole="Ders_Adlari" ToRole="Hocalar1" />
+        </EntityType>
+        <EntityType Name="Ders_Secim">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DersKodu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Kredi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Saat" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="idDers" Type="Int32" />
+          <NavigationProperty Name="Ders_Adlari" Relationship="Self.FK_Ders_Secim_Ders_Adlari" FromRole="Ders_Secim" ToRole="Ders_Adlari" />
+        </EntityType>
+        <EntityType Name="Hocalar1">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Hoca" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="idHoca" Type="Int32" />
+          <NavigationProperty Name="Ders_Adlari" Relationship="Self.FK_Hocalar1_Ders_Adlari" FromRole="Hocalar1" ToRole="Ders_Adlari" />
+        </EntityType>
+        <EntityType Name="Secilen_Dersler">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ders" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Kod" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Kredi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Saat" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Hoca" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_Ders_Secim_Ders_Adlari">
+          <End Role="Ders_Adlari" Type="Self.Ders_Adlari" Multiplicity="0..1" />
+          <End Role="Ders_Secim" Type="Self.Ders_Secim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ders_Adlari">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Ders_Secim">
+              <PropertyRef Name="idDers" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hocalar1_Ders_Adlari">
+          <End Role="Ders_Adlari" Type="Self.Ders_Adlari" Multiplicity="0..1" />
+          <End Role="Hocalar1" Type="Self.Hocalar1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ders_Adlari">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Hocalar1">
+              <PropertyRef Name="idHoca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="KayıtSistemiEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Ders_Adlari" EntityType="Self.Ders_Adlari" />
+          <EntitySet Name="Ders_Secim" EntityType="Self.Ders_Secim" />
+          <EntitySet Name="Hocalar1" EntityType="Self.Hocalar1" />
+          <EntitySet Name="Secilen_Dersler" EntityType="Self.Secilen_Dersler" />
+          <AssociationSet Name="FK_Ders_Secim_Ders_Adlari" Association="Self.FK_Ders_Secim_Ders_Adlari">
+            <End Role="Ders_Adlari" EntitySet="Ders_Adlari" />
+            <End Role="Ders_Secim" EntitySet="Ders_Secim" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hocalar1_Ders_Adlari" Association="Self.FK_Hocalar1_Ders_Adlari">
+            <End Role="Ders_Adlari" EntitySet="Ders_Adlari" />
+            <End Role="Hocalar1" EntitySet="Hocalar1" />
+          </AssociationSet>
+          <EntitySet Name="son" EntityType="KayıtSistemiModel.son" />
+        </EntityContainer>
+        <EntityType Name="son">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="DersKodu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Kredi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Saat" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DersAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Hoca" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="KayıtSistemiModelStoreContainer" CdmEntityContainer="KayıtSistemiEntities">
+          <EntitySetMapping Name="Ders_Adlari">
+            <EntityTypeMapping TypeName="KayıtSistemiModel.Ders_Adlari">
+              <MappingFragment StoreEntitySet="Ders_Adlari">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="DersAdi" ColumnName="DersAdi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ders_Secim">
+            <EntityTypeMapping TypeName="KayıtSistemiModel.Ders_Secim">
+              <MappingFragment StoreEntitySet="Ders_Secim">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="DersKodu" ColumnName="DersKodu" />
+                <ScalarProperty Name="Kredi" ColumnName="Kredi" />
+                <ScalarProperty Name="Saat" ColumnName="Saat" />
+                <ScalarProperty Name="idDers" ColumnName="idDers" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hocalar1">
+            <EntityTypeMapping TypeName="KayıtSistemiModel.Hocalar1">
+              <MappingFragment StoreEntitySet="Hocalar1">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Hoca" ColumnName="Hoca" />
+                <ScalarProperty Name="idHoca" ColumnName="idHoca" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Secilen_Dersler">
+            <EntityTypeMapping TypeName="KayıtSistemiModel.Secilen_Dersler">
+              <MappingFragment StoreEntitySet="Secilen_Dersler">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Ders" ColumnName="Ders" />
+                <ScalarProperty Name="Kod" ColumnName="Kod" />
+                <ScalarProperty Name="Kredi" ColumnName="Kredi" />
+                <ScalarProperty Name="Saat" ColumnName="Saat" />
+                <ScalarProperty Name="Hoca" ColumnName="Hoca" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="son">
+            <EntityTypeMapping TypeName="KayıtSistemiModel.son">
+              <MappingFragment StoreEntitySet="son">
+                <ScalarProperty Name="Hoca" ColumnName="Hoca" />
+                <ScalarProperty Name="DersAdi" ColumnName="DersAdi" />
+                <ScalarProperty Name="Saat" ColumnName="Saat" />
+                <ScalarProperty Name="Kredi" ColumnName="Kredi" />
+                <ScalarProperty Name="DersKodu" ColumnName="DersKodu" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
